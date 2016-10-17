@@ -1,0 +1,87 @@
+---
+title: "Module06"
+author: "dmsnodderly"
+date: "October 15, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Sys.getenv("R_HOME")
+
+f<-"KamilarAndCooperData.csv"
+f
+d<-read.csv(f, header=TRUE,sep=",", stringsAsFactors=FALSE)
+head(d)
+
+#challenge 7
+
+aggregate(d$Body_mass_female_mean ~ d$Family, FUN = "mean", na.rm = TRUE)
+
+
+install.packages("dplyr")
+library(dplyr)
+
+s<-filter(d, Family =="Hominidae" & Brain_Size_Species_Mean >200)
+head(s)
+
+s<-filter(d, Family ==Hominidae & Brain_Size_Species_Mean >200)
+head(s)
+
+s <- arrange(d, Family, Genus, Body_mass_male_mean)  # rearranging a data frame...
+head(s)
+
+install.function("arrange")
+install.packages("dplyr")
+
+s <- arrange(d, Family, Genus, Body_mass_male_mean)
+head(s)
+require(dplyr)
+s <- arrange(d, Family, Genus, Mass_Dimorphism)
+head(s)
+
+s<-select(d,Family, Genus, Mass_Dimorphism)
+head(s)
+a<-arrange(s,Family, Mass_Dimorphism, Genus)
+head(a)
+
+b<-rename(a, Dimorphism = Mass_Dimorphism)
+head(b)
+
+s<-rename(d, Female_Mass = Body_mass_female_mean)
+head(s)
+head(s$Female_Mass)
+
+s <- mutate(d, Binomial = paste(Genus, Family, sep = " "))
+head(s$Binomial)  # and adding new columns...
+
+s <- summarise(d, avgF = mean(Body_mass_female_mean, na.rm = TRUE), avgM = mean(Body_mass_male_mean, na.rm = TRUE))
+s
+
+byGenus <- group_by(d, Genus)
+byGenus
+
+s <- summarise(byGenus, avgF = mean(Body_mass_female_mean, na.rm = TRUE), avgM = mean(Body_mass_male_mean, na.rm = TRUE))
+s
